@@ -2,6 +2,7 @@ menuconfig PKG_USING_PNET
     bool "P-Net stack for Profinet device implementation"
     select BSP_USING_ETH
     select RT_LWIP_SNMP
+    select RT_LWIP_ENABLE_USER_HOOKS
     select PKG_PENT_NETIF_NAME
     select PKG_PNET_BOARD_CONFIG
     select PKG_PENT_FILESYSTEM_CONFIG
@@ -44,6 +45,11 @@ if PKG_USING_PNET
                 select RT_USING_DFS
                 select RT_USING_DFS_RAMFS
                 default n
+                if PNET_USING_RAMFS
+                    config PNET_RAMFS_SIZE
+                    int "default memory size for ramfs"
+                    default 8192
+                endif
         endif
 
     menuconfig PKG_PNET_NET_CONFIG
